@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/pantallas/principal.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:news_app/pantallas/principal.dart';
 
 void main() {
   initializeDateFormatting('es_MX', null).then((_) => {});
