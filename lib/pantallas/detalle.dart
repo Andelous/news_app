@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/util/noticia.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PantallaDetalle extends StatelessWidget {
   final Noticia noticia;
@@ -76,11 +77,16 @@ class PantallaDetalle extends StatelessWidget {
                         Row(
                           children: [
                             Text('Por: '),
-                            Text(
-                              noticia.autor ?? 'Sin autor',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.primary,
+                            SizedBox(
+                              width: 170,
+                              child: Text(
+                                noticia.autor ?? 'Sin autor',
+                                overflow: TextOverflow.fade,
+                                softWrap: false,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                               ),
                             ),
                           ],
@@ -101,6 +107,21 @@ class PantallaDetalle extends StatelessWidget {
                     Text(
                       noticia.descripcion ?? 'Sin descripción',
                       style: TextStyle(fontSize: 20),
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton.icon(
+                      icon: Icon(Icons.launch),
+                      label: Text(
+                        'Abrir en la web',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      onPressed: () {
+                        Uri _url = Uri.parse(
+                          noticia.url ?? 'https://example.com',
+                        );
+
+                        launchUrl(_url);
+                      },
                     ),
                     // Add more details as needed
                   ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:news_app/pantallas/buscar.dart';
 import 'package:news_app/pantallas/principal.dart';
 
 void main() {
@@ -35,24 +36,10 @@ class _WidgetPrincipalState extends State<WidgetPrincipal> {
 
   @override
   Widget build(BuildContext context) {
-    Widget pantalla;
-
-    switch (selectedIndex) {
-      case 0:
-        pantalla = PantallaPrincipal(titulo: 'Inicio');
-        break;
-      case 1:
-        pantalla = PantallaPrincipal(titulo: 'Buscar');
-        break;
-      case 2:
-        pantalla = PantallaPrincipal(titulo: 'Favoritos');
-        break;
-      case 3:
-        pantalla = PantallaPrincipal(titulo: 'DETALLE');
-        break;
-      default:
-        throw UnimplementedError('no widget for $selectedIndex');
-    }
+    List<Widget> pantallas = [];
+    pantallas.add(PantallaPrincipal(titulo: 'Inicio'));
+    pantallas.add(PantallaBuscar());
+    pantallas.add(PantallaPrincipal(titulo: 'Favoritos'));
 
     return Scaffold(
       appBar: AppBar(
@@ -67,10 +54,10 @@ class _WidgetPrincipalState extends State<WidgetPrincipal> {
         ),
         titleTextStyle: TextStyle(color: Colors.white, fontSize: 28),
       ),
-      body: pantalla,
+      body: IndexedStack(index: selectedIndex, children: pantallas),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
+          BottomNavigationBarItem(icon: Icon(Icons.public), label: 'El mundo'),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Buscar'),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite),

@@ -96,13 +96,12 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
         ],
       );
     } else {
-      w = SizedBox(height: 1);
+      w = SizedBox(height: 60);
     }
 
     return ListView(
       controller: _scrollController,
       children: [
-        Text(widget.titulo),
         SizedBox(height: 20),
         for (Noticia noticia in noticias) TarjetaNoticia(noticia: noticia),
         SizedBox(height: 20),

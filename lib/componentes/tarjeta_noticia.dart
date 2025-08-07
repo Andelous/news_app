@@ -59,7 +59,7 @@ class TarjetaNoticia extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
-                      width: 200,
+                      width: 180,
                       child: Text(
                         noticia.fuente ?? 'Sin fuente',
                         overflow: TextOverflow.fade,
