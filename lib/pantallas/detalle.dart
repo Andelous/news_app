@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/util/favoritos_model.dart';
 import 'package:news_app/util/noticia.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PantallaDetalle extends StatelessWidget {
@@ -9,6 +11,16 @@ class PantallaDetalle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FavoritosModel favoritosModel = context.watch<FavoritosModel>();
+
+    Icon? i;
+
+    if (favoritosModel.obtenerFavorito(noticia.url!) != null) {
+      i = Icon(Icons.favorite, color: Colors.red);
+    } else {
+      i = Icon(Icons.favorite_border, color: Colors.grey);
+    }
+
     return MaterialApp(
       title: 'ULSA Noticias',
       theme: ThemeData(
@@ -129,6 +141,12 @@ class PantallaDetalle extends StatelessWidget {
               ),
             ),
           ],
+        ),
+        floatingActionButton: FloatingActionButton(backgroundColor: Colors.white,
+          onPressed: () {
+            favoritosModel.alternarFavorito(noticia);
+          },
+          child: i,
         ),
       ),
     );
