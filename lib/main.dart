@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:news_app/pantallas/buscar.dart';
+import 'package:news_app/pantallas/favoritos.dart';
 import 'package:news_app/pantallas/principal.dart';
+import 'package:news_app/util/favoritos_model.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   initializeDateFormatting('es_MX', null).then((_) => {});
 
-  runApp(const NewsApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => FavoritosModel(),
+      child: const NewsApp(),
+    ),
+  );
 }
 
 class NewsApp extends StatelessWidget {
@@ -39,7 +47,7 @@ class _WidgetPrincipalState extends State<WidgetPrincipal> {
     List<Widget> pantallas = [];
     pantallas.add(PantallaPrincipal(titulo: 'Inicio'));
     pantallas.add(PantallaBuscar());
-    pantallas.add(PantallaPrincipal(titulo: 'Favoritos'));
+    pantallas.add(PantallaFavoritos());
 
     return Scaffold(
       appBar: AppBar(

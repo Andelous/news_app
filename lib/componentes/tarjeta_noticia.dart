@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/pantallas/detalle.dart';
+import 'package:news_app/util/favoritos_model.dart';
 import 'package:news_app/util/noticia.dart';
+import 'package:provider/provider.dart';
 
 class TarjetaNoticia extends StatelessWidget {
   final Noticia noticia;
@@ -9,6 +11,16 @@ class TarjetaNoticia extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FavoritosModel favoritosModel = context.watch<FavoritosModel>();
+
+    Icon? i;
+
+    if (favoritosModel.obtenerFavorito(noticia.url!) != null) {
+      i = Icon(Icons.favorite, color: Colors.red);
+    } else {
+      i = Icon(Icons.favorite_border, color: Colors.grey);
+    }
+
     Image imagen = Image.network(
       noticia.urlImagen ??
           'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png',
@@ -25,59 +37,76 @@ class TarjetaNoticia extends StatelessWidget {
 
     return SizedBox(
       width: double.infinity,
-      child: Card(
-        margin: EdgeInsets.fromLTRB(20, 6, 20, 6),
-        elevation: 5,
-        color: Colors.white,
-        child: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PantallaDetalle(noticia: noticia),
-              ),
-            );
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadiusGeometry.circular(16),
-                    child: imagen,
+      child: Stack(
+        children: [
+          Card(
+            margin: EdgeInsets.fromLTRB(20, 6, 20, 6),
+            elevation: 5,
+            color: Colors.white,
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PantallaDetalle(noticia: noticia),
                   ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  noticia.titulo ?? 'Sin título',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: 180,
-                      child: Text(
-                        noticia.fuente ?? 'Sin fuente',
-                        overflow: TextOverflow.fade,
-                        softWrap: false,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
+                    Center(
+                      child: ClipRRect(
+                        borderRadius: BorderRadiusGeometry.circular(16),
+                        child: imagen,
                       ),
                     ),
-                    Text(noticia.getFechaLegible()),
+                    SizedBox(height: 10),
+                    Text(
+                      noticia.titulo ?? 'Sin título',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 180,
+                          child: Text(
+                            noticia.fuente ?? 'Sin fuente',
+                            overflow: TextOverflow.fade,
+                            softWrap: false,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                        ),
+                        Text(noticia.getFechaLegible()),
+                      ],
+                    ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+          Positioned(
+            left: 345,
+            top: 5,
+            child: IconButton(
+              onPressed: () {
+                favoritosModel.alternarFavorito(noticia);
+              },
+              icon: i,
+            ),
+          ),
+        ],
       ),
     );
   }
