@@ -97,7 +97,7 @@ class TarjetaNoticia extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 345,
+            right: 20,
             top: 5,
             child: IconButton(
               onPressed: () {
