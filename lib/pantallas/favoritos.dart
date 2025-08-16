@@ -36,6 +36,8 @@ class PantallaFavoritos extends StatelessWidget {
         ),
 
         for (Noticia noticia in favoritos) TarjetaNoticia(noticia: noticia),
+
+        SizedBox(height: 30),
       ],
     );
   }

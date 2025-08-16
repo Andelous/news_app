@@ -28,6 +28,12 @@ class PantallaDetalle extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+          ),
           title: Text(
             'Detalle de noticia',
             style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
@@ -142,7 +148,8 @@ class PantallaDetalle extends StatelessWidget {
             ),
           ],
         ),
-        floatingActionButton: FloatingActionButton(backgroundColor: Colors.white,
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.white,
           onPressed: () {
             favoritosModel.alternarFavorito(noticia);
           },
