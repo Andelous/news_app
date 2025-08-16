@@ -104,15 +104,7 @@ class ClienteHttp {
     Noticia noticia;
     List noticiasMap = decodedResponse['articles'];
     for (Map noticiaMap in noticiasMap) {
-      noticia = Noticia(
-        autor: noticiaMap['author'],
-        descripcion: noticiaMap['content'],
-        fecha: noticiaMap['publishedAt'],
-        fuente: noticiaMap['source']['name'],
-        titulo: noticiaMap['title'],
-        urlImagen: noticiaMap['urlToImage'],
-        url: noticiaMap['url'],
-      );
+      noticia = Noticia.fromJsonHttp(noticiaMap);
       noticias.add(noticia);
     }
 
